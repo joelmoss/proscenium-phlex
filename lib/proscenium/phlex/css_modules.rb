@@ -3,9 +3,9 @@
 module Proscenium::Phlex
   module CssModules
     extend ActiveSupport::Concern
-    include Proscenium::CssModule
 
     included do
+      include Proscenium::CssModule
       include Proscenium::SourcePath
       extend Proscenium::CssModule::Path
     end
