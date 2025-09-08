@@ -2,7 +2,6 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in proscenium-view_component.gemspec
 gemspec
 
 gem 'proscenium', path: '../proscenium'
