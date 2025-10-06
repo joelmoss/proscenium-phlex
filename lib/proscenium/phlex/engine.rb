@@ -4,7 +4,6 @@ require 'rails/engine'
 
 module Proscenium
   module Phlex
-    # @api private
     class Engine < ::Rails::Engine
     end
   end

@@ -52,7 +52,7 @@ Within your Phlex classes, any class names that begin with `@` will be treated a
 ```ruby
 # /app/views/users/show_view.rb
 class Users::ShowView < Phlex::HTML
-  include Proscenium::Phlex::Sideload # <--
+  include Proscenium::Phlex::CssModules # <--
 
   def view_template
     h1 class: :@user_name do

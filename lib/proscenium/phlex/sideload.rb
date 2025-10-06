@@ -7,6 +7,7 @@ module Proscenium::Phlex
 
     included do
       include Proscenium::SourcePath
+
       class_attribute :sideload_assets_options
     end
 

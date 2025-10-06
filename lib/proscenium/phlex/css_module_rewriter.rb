@@ -57,7 +57,7 @@ module Proscenium::Phlex
         type = value.type
 
         if (type == :symbol_node && value.value.start_with?(PREFIX)) ||
-           (type == :array_node && value.elements.any? { |it| it.value.start_with?(PREFIX) })
+           (type == :array_node && value.elements.any? { it.value.start_with?(PREFIX) })
           build_annotation value
         end
       end
