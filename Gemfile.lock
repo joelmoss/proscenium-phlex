@@ -8,7 +8,7 @@ PATH
 PATH
   remote: .
   specs:
-    proscenium-phlex (0.3.0)
+    proscenium-phlex (0.3.1)
       phlex-rails (~> 1.2.2)
       prism
       proscenium (~> 0.20.0)
