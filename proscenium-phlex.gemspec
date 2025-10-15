@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'phlex-rails', '~> 1.2.2'
   spec.add_dependency 'prism'
-  spec.add_dependency 'proscenium', '~> 0.20.0'
+  spec.add_dependency 'proscenium', '~> 0.21.0'
   spec.add_dependency 'rails', ['>= 7.1.0', '< 9.0']
   spec.add_dependency 'require-hooks', '~> 0.2'
 end
