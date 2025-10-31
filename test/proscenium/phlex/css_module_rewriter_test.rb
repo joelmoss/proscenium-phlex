@@ -7,15 +7,15 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     it 'rewrites class name beginning with @' do
       rewrite 'single_class'
       render Components::CssModuleRewriter::SingleClass
-
-      assert_dom 'div.title-25fdfdc7', text: 'Hello'
+      assert_dom 'div.title_415a1d9e_app-components-css_module_rewriter-base-module', text: 'Hello'
     end
 
     it 'rewrites multiple class names beginning with @' do
       rewrite 'multiple_classes'
       render Components::CssModuleRewriter::MultipleClasses
 
-      assert_dom 'div.title-25fdfdc7.another_class', text: 'Hello'
+      assert_dom 'div.title_415a1d9e_app-components-css_module_rewriter-base-module.another_class',
+                 text: 'Hello'
     end
 
     it 'does not rewrite class names without with @' do
@@ -30,14 +30,16 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     rewrite 'class_css_module'
     render Components::CssModuleRewriter::ClassCssModule
 
-    assert_dom 'div.title-17be5b69', text: 'Hello'
+    assert_dom 'div.title_7881b9e8_app-components-css_module_rewriter-class_css_module-module',
+               text: 'Hello'
   end
 
   it 'uses custom css_module_path' do
     rewrite 'css_module_path'
     render Components::CssModuleRewriter::CssModulePath
 
-    assert_dom 'div.title-17be5b69', text: 'Hello'
+    assert_dom 'div.title_7881b9e8_app-components-css_module_rewriter-class_css_module-module',
+               text: 'Hello'
   end
 
   private

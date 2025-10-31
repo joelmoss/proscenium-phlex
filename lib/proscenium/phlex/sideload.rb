@@ -18,9 +18,9 @@ module Proscenium::Phlex
     end
 
     def before_template
-      if helpers.controller.respond_to?(:sideload_assets_options)
-        Proscenium::SideLoad.sideload_inheritance_chain self,
-                                                        helpers.controller.sideload_assets_options
+      controller = (try(:view_context) || try(:helpers)).controller
+      if controller.respond_to?(:sideload_assets_options)
+        Proscenium::SideLoad.sideload_inheritance_chain self, controller.sideload_assets_options
       end
 
       super

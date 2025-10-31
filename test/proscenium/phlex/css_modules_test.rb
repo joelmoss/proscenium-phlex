@@ -8,7 +8,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       it 'should not use css module name' do
         render Components::SideLoadCssModuleFromAttributesView.new('base')
 
-        assert_dom 'div.base', text: 'Hello'
+        assert_equal '<div class="base">Hello</div>', @response
       end
     end
 
@@ -16,7 +16,9 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       it 'should use css module name' do
         render Components::SideLoadCssModuleFromAttributesView.new(:@base)
 
-        assert_dom 'div.base-2ea1c733', text: 'Hello'
+        assert_equal <<~HTML.strip, @response
+          <div class="base_ec22afde_app-components-side_load_css_module_from_attributes_view-module">Hello</div>
+        HTML
       end
     end
   end
@@ -25,7 +27,8 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'replaces with CSS module name' do
       fragment = render_fragment Components::CssModuleHelper.new
 
-      assert_equal '<h1 class="header-7d8d692a">Hello</h1>', fragment
+      assert_equal '<h1 class="header_39452110_app-components-css_module_helper-module">Hello</h1>',
+                   fragment
     end
 
     it 'side loads css module' do
@@ -34,7 +37,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       path = '/node_modules/@rubygems/proscenium-phlex/test/dummy/app/components'
       assert_equal({
                      "#{path}/css_module_helper.module.css" => {
-                       digest: '7d8d692a'
+                       digest: '39452110'
                      }
                    }, Proscenium::Importer.imported)
     end
@@ -53,7 +56,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses child' do
       render Components::Father.new
 
-      assert_dom 'h1.grandfather-61c6900a', text: 'Grandfather'
+      assert_dom 'h1.grandfather_f4cca167_app-components-father-module', text: 'Grandfather'
     end
   end
 
@@ -61,7 +64,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Child.new
 
-      assert_dom 'h1.grandfather-61c6900a', text: 'Grandfather'
+      assert_dom 'h1.grandfather_f4cca167_app-components-father-module', text: 'Grandfather'
     end
   end
 
@@ -69,7 +72,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Grandfather.new
 
-      assert_dom 'h1.grandfather-699e297c', text: 'Grandfather'
+      assert_dom 'h1.grandfather_c538d4aa_app-components-grandfather-module', text: 'Grandfather'
     end
   end
 end

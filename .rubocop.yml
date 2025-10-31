@@ -2,7 +2,6 @@ plugins:
   - rubocop-rails
   - rubocop-minitest
   - rubocop-disable_syntax
-  - rubocop-capybara
   - rubocop-packaging
   - rubocop-rake
   - rubocop-performance
@@ -13,6 +12,7 @@ AllCops:
   SuggestExtensions: false
   Exclude:
     - "gemfiles/**/*"
+    - "vendor/"
 
 Naming/FileName:
   Exclude:

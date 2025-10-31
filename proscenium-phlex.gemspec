@@ -25,12 +25,13 @@ Gem::Specification.new do |spec|
   spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
     ls.readlines("\x0", chomp: true).reject do |f|
       (f == gemspec) ||
-        f.start_with?(*%w[bin/ test/ spec/ features/ .git .github appveyor Gemfile])
+        f.start_with?(*%w[bin/ test/ .git .github Gemfile])
     end
   end
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'phlex-rails', '~> 1.2.2'
+  spec.add_dependency 'phlexible', '>= 3.1.0'
+  spec.add_dependency 'phlex-rails', ['>= 1.2', '< 3.0']
   spec.add_dependency 'prism'
   spec.add_dependency 'proscenium', '>= 0.21.0'
   spec.add_dependency 'rails', ['>= 7.1.0', '< 9.0']
