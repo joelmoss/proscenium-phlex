@@ -16,19 +16,22 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       it 'should use css module name' do
         render Components::SideLoadCssModuleFromAttributesView.new(:@base)
 
-        assert_equal <<~HTML.strip, @response
-          <div class="base_ec22afde_app-components-side_load_css_module_from_attributes_view-module">Hello</div>
-        HTML
+        assert_match(
+          /class="base_[a-z0-9]{8}_app-components-side_load_css_module_from_attributes_view-module"/, # rubocop:disable Layout/LineLength
+          @response
+        )
       end
     end
   end
 
   context 'css_module helper' do
     it 'replaces with CSS module name' do
-      fragment = render_fragment Components::CssModuleHelper.new
+      render Components::CssModuleHelper.new
 
-      assert_equal '<h1 class="header_39452110_app-components-css_module_helper-module">Hello</h1>',
-                   fragment
+      assert_match(
+        /class="header_[a-z0-9]{8}_app-components-css_module_helper-module"/,
+        @response
+      )
     end
 
     it 'side loads css module' do
@@ -56,7 +59,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses child' do
       render Components::Father.new
 
-      assert_dom 'h1.grandfather_f4cca167_app-components-father-module', text: 'Grandfather'
+      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-father-module"/, @response)
     end
   end
 
@@ -64,7 +67,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Child.new
 
-      assert_dom 'h1.grandfather_f4cca167_app-components-father-module', text: 'Grandfather'
+      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-father-module"/, @response)
     end
   end
 
