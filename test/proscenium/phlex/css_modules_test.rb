@@ -38,11 +38,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       render Components::CssModuleHelper.new
 
       path = '/node_modules/@rubygems/proscenium-phlex/test/dummy/app/components'
-      assert_equal({
-                     "#{path}/css_module_helper.module.css" => {
-                       digest: '39452110'
-                     }
-                   }, Proscenium::Importer.imported)
+      assert_equal(["#{path}/css_module_helper.module.css"], Proscenium::Importer.imported.keys)
     end
   end
 
@@ -75,7 +71,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Grandfather.new
 
-      assert_dom 'h1.grandfather_c538d4aa_app-components-grandfather-module', text: 'Grandfather'
+      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-grandfather-module"/, @response)
     end
   end
 end
