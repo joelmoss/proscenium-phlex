@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    proscenium-phlex (0.5.0)
+    proscenium-phlex (0.6.0)
       phlex-rails (>= 1.2, < 3.0)
       phlexible (>= 3.1.0)
       prism
@@ -486,7 +486,7 @@ CHECKSUMS
   proscenium (0.22.7-arm64-darwin) sha256=d42f5f7bcdf3c516fd363fd2e8763804f4e43b276bad1a17d3fdc97aea86da32
   proscenium (0.22.7-x86_64-darwin) sha256=1a338599f40a9e5c63b615c4a1c8c65d1486b6e1b0ba27053475977b5eea7eba
   proscenium (0.22.7-x86_64-linux) sha256=91dee93cda98498e706ec49d53c1c7ba40ef8a6b002b138b52cdd2046860801f
-  proscenium-phlex (0.5.0)
+  proscenium-phlex (0.6.0)
   psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
   public_suffix (7.0.2) sha256=9114090c8e4e7135c1fd0e7acfea33afaab38101884320c65aaa0ffb8e26a857
   puma (7.2.0) sha256=bf8ef4ab514a4e6d4554cb4326b2004eba5036ae05cf765cfe51aba9706a72a8
