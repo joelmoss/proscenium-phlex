@@ -3,9 +3,16 @@
 require 'test_helper'
 
 class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
+  before do
+    Proscenium::Phlex::CssModuleRewriter.init(
+      include: [
+        Rails.root.join('app/components/css_module_rewriter/*.rb').to_s
+      ]
+    )
+  end
+
   context 'with superclass css module path' do
     it 'rewrites class name beginning with @' do
-      rewrite 'single_class'
       render Components::CssModuleRewriter::SingleClass
 
       assert_match(
@@ -15,7 +22,6 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     end
 
     it 'rewrites multiple class names beginning with @' do
-      rewrite 'multiple_classes'
       render Components::CssModuleRewriter::MultipleClasses
 
       assert_match(
@@ -25,7 +31,6 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     end
 
     it 'does not rewrite class names without with @' do
-      rewrite 'non_css_module'
       render Components::CssModuleRewriter::NonCssModule
 
       assert_dom 'div.title', text: 'Hello'
@@ -33,7 +38,6 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
   end
 
   it 'uses class css module path' do
-    rewrite 'class_css_module'
     render Components::CssModuleRewriter::ClassCssModule
 
     assert_match(
@@ -43,7 +47,6 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
   end
 
   it 'uses custom css_module_path' do
-    rewrite 'css_module_path'
     render Components::CssModuleRewriter::CssModulePath
 
     assert_match(
@@ -51,14 +54,4 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
       @response
     )
   end
-
-  private
-
-    def rewrite(filename)
-      Proscenium::Phlex::CssModuleRewriter.init(
-        include: [
-          Rails.root.join('app/components/css_module_rewriter').to_s + "/#{filename}.rb"
-        ]
-      )
-    end
 end

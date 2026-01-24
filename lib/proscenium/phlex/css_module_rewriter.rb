@@ -5,8 +5,7 @@ require 'require-hooks/setup'
 
 module Proscenium::Phlex
   class CssModuleRewriter
-    def self.init(include: [], exclude: [])
-      puts include
+    def self.init(include: nil, exclude: nil)
       RequireHooks.source_transform(patterns: include, exclude_patterns: exclude) do |path, source|
         source ||= File.read(path)
         Processor.call(source)
