@@ -6,8 +6,8 @@ require 'require-hooks/setup'
 module Proscenium::Phlex
   class CssModuleRewriter
     def self.init(include: [], exclude: [])
+      puts include
       RequireHooks.source_transform(patterns: include, exclude_patterns: exclude) do |path, source|
-        puts path
         source ||= File.read(path)
         Processor.call(source)
       end
@@ -55,7 +55,7 @@ module Proscenium::Phlex
         type = value.type
 
         if (type == :symbol_node && value.value.start_with?(PREFIX)) ||
-           (type == :array_node && value.elements.any? { it.value.start_with?(PREFIX) })
+           (type == :array_node && value.elements.any? { |x| x.value.start_with?(PREFIX) })
           build_annotation value
         end
       end
