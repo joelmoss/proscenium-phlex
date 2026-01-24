@@ -3,21 +3,20 @@ on: [push]
 
 jobs:
   test:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest"]
         ruby:
           - "3.3"
           - "3.4"
-    runs-on: ${{ matrix.os }}
+          - "4.0"
 
     env:
       RAILS_ENV: test
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
@@ -27,14 +26,16 @@ jobs:
 
   rubocop:
     runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        ruby:
+          - "3.3"
+          - "3.4"
+          - "4.0"
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.3"
+          ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-
-      - name: Rubocop
-        run: bundle exec rubocop -P --fail-level C
+      - run: bundle exec rubocop -P --fail-level C
