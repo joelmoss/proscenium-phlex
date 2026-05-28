@@ -16,7 +16,7 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
       render Components::CssModuleRewriter::SingleClass
 
       assert_match(
-        /class="title_[a-z0-9]{8}_app-components-css_module_rewriter-base-module"/,
+        /class="title_[a-z0-9]{8}"/,
         @response
       )
     end
@@ -25,7 +25,7 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
       render Components::CssModuleRewriter::MultipleClasses
 
       assert_match(
-        /class="title_[a-z0-9]{8}_app-components-css_module_rewriter-base-module.another_class"/,
+        /class="title_[a-z0-9]{8}.another_class"/,
         @response
       )
     end
@@ -41,7 +41,7 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     render Components::CssModuleRewriter::ClassCssModule
 
     assert_match(
-      /class="title_[a-z0-9]{8}_app-components-css_module_rewriter-class_css_module-module"/,
+      /class="title_[a-z0-9]{8}"/,
       @response
     )
   end
@@ -50,7 +50,7 @@ class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
     render Components::CssModuleRewriter::CssModulePath
 
     assert_match(
-      /class="title_[a-z0-9]{8}_app-components-css_module_rewriter-class_css_module-module"/,
+      /class="title_[a-z0-9]{8}"/,
       @response
     )
   end

@@ -17,7 +17,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
         render Components::SideLoadCssModuleFromAttributesView.new(:@base)
 
         assert_match(
-          /class="base_[a-z0-9]{8}_app-components-side_load_css_module_from_attributes_view-module"/, # rubocop:disable Layout/LineLength
+          /class="base_[a-z0-9]{8}"/,
           @response
         )
       end
@@ -29,7 +29,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
       render Components::CssModuleHelper.new
 
       assert_match(
-        /class="header_[a-z0-9]{8}_app-components-css_module_helper-module"/,
+        /class="header_[a-z0-9]{8}"/,
         @response
       )
     end
@@ -55,7 +55,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses child' do
       render Components::Father.new
 
-      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-father-module"/, @response)
+      assert_match(/class="grandfather_[a-z0-9]{8}"/, @response)
     end
   end
 
@@ -63,7 +63,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Child.new
 
-      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-father-module"/, @response)
+      assert_match(/class="grandfather_[a-z0-9]{8}"/, @response)
     end
   end
 
@@ -71,7 +71,7 @@ class Proscenium::Phlex::CssModulesTest < ActiveSupport::TestCase
     it 'uses parent' do
       render Components::Grandfather.new
 
-      assert_match(/class="grandfather_[a-z0-9]{8}_app-components-grandfather-module"/, @response)
+      assert_match(/class="grandfather_[a-z0-9]{8}"/, @response)
     end
   end
 
