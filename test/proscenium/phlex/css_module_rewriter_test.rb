@@ -3,14 +3,6 @@
 require 'test_helper'
 
 class Proscenium::Phlex::CssModuleRewriterTest < ActiveSupport::TestCase
-  before do
-    Proscenium::Phlex::CssModuleRewriter.init(
-      include: [
-        Rails.root.join('app/components/css_module_rewriter/*.rb').to_s
-      ]
-    )
-  end
-
   context 'with superclass css module path' do
     it 'rewrites class name beginning with @' do
       render Components::CssModuleRewriter::SingleClass
