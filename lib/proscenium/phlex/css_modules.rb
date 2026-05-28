@@ -71,11 +71,10 @@ module Proscenium::Phlex
       if attributes.key?(:class) && (attributes[:class] = tokens(attributes[:class])).include?('@')
         names = attributes[:class].is_a?(Array) ? attributes[:class] : attributes[:class].split
 
-        self.class.resolved_css_module_paths ||= Concurrent::Set.new
+        paths = self.class.resolved_css_module_paths ||= Concurrent::Set.new
 
-        attributes[:class] = cssm.class_names(*names).map do |name, path|
-          self.class.resolved_css_module_paths << path if path
-          name
+        attributes[:class] = cssm.class_names(*names) do |_name, path|
+          paths << path if path
         end
       end
 
