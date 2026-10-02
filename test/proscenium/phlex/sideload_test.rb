@@ -12,6 +12,17 @@ class Proscenium::Phlex::SideloadTest < ActionDispatch::IntegrationTest
                  ], Proscenium::Importer.imported.keys)
   end
 
+  # The controller's options belong to the controller, so its procs are evaluated against it, as
+  # they are for ERB views, and not against the component.
+  test 'evaluates a controller proc against the controller' do
+    controller.class.sideload_assets proc { !is_a?(ActionController::Base) }
+    render Components::One.new
+
+    assert_empty Proscenium::Importer.imported.to_h
+  ensure
+    controller.class.sideload_assets nil
+  end
+
   test 'nested sideloading' do
     render Components::Nested.new
 
