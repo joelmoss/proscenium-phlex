@@ -13,6 +13,5 @@ module Proscenium
     autoload :Sideload, 'proscenium/phlex/sideload'
     autoload :CssModules, 'proscenium/phlex/css_modules'
     autoload :CssModuleRewriter, 'proscenium/phlex/css_module_rewriter'
-    autoload :React, 'proscenium/phlex/react'
   end
 end
