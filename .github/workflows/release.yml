@@ -1,0 +1,56 @@
+# Publishes the gem to RubyGems when a version tag is pushed, using trusted publishing (OIDC), so no
+# API key or one-time code is needed. Release by bumping VERSION, committing, then pushing a tag:
+#
+#   git tag v0.7.0 && git push origin v0.7.0
+#
+# Requires a trusted publisher on rubygems.org for proscenium-phlex, matching this repository,
+# `release.yml` and the `release` environment.
+name: release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Nothing after the clone needs git credentials.
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - name: Tag must match the gem version
+        id: version
+        run: |
+          version=$(ruby -Ilib -rproscenium/phlex/version -e 'print Proscenium::Phlex::VERSION')
+          [ "${GITHUB_REF_NAME#v}" = "$version" ] || {
+            echo "::error::tag $GITHUB_REF_NAME does not match VERSION $version"
+            exit 1
+          }
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+      - run: bundle exec rails test
+      - run: gem build proscenium-phlex.gemspec
+      # Pinned to a commit, not a tag: this is the only step that can publish, and a tag can be
+      # repointed by whoever owns the action.
+      - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
+      # Skips a version RubyGems already has, so a re-run after a failure finishes the release.
+      - name: Push to RubyGems
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if curl -sfo /dev/null "https://rubygems.org/api/v2/rubygems/proscenium-phlex/versions/$VERSION.json"; then
+            echo "proscenium-phlex $VERSION is already on RubyGems"
+          else
+            gem push "proscenium-phlex-$VERSION.gem"
+          fi
