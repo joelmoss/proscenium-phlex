@@ -6,7 +6,7 @@
 
 - Ruby >= 3.4
 - [Proscenium](https://github.com/joelmoss/proscenium) ~> 0.26
-- Rails >= 7.1 and < 9.0
+- Rails >= 7.2 and < 9.0
 - Phlex Rails >= 1.2 and < 3.0
 
 ## Upgrading to 0.7
