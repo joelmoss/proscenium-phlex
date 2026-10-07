@@ -1,6 +1,13 @@
 name: main
 on: [push]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,31 +17,31 @@ jobs:
         ruby:
           - "3.4"
           - "4.0"
+        gemfile:
+          - phlex1_rails7
+          - phlex1_rails8
+          - phlex2_rails7
+          - phlex2_rails8
 
     env:
       RAILS_ENV: test
+      # Set at job level so setup-ruby installs and caches this appraisal's bundle.
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - run: bundle exec appraisal install
-      - run: bundle exec appraisal rails test
+      - run: bundle exec rails test
 
   rubocop:
-    runs-on: "ubuntu-latest"
-    strategy:
-      fail-fast: false
-      matrix:
-        ruby:
-          - "3.4"
-          - "4.0"
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
+          ruby-version: "3.4"
           bundler-cache: true
       - run: bundle exec rubocop -P --fail-level C
