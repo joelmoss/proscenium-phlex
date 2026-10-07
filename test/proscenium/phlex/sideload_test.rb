@@ -23,6 +23,16 @@ class Proscenium::Phlex::SideloadTest < ActionDispatch::IntegrationTest
     controller.class.sideload_assets nil
   end
 
+  test 'does not evaluate a controller proc when side loading is disabled' do
+    Proscenium.config.side_load = false
+    controller.class.sideload_assets proc { raise 'controller proc evaluated' }
+    render Components::One.new
+
+    assert_empty Proscenium::Importer.imported.to_h
+  ensure
+    controller.class.sideload_assets nil
+  end
+
   test 'nested sideloading' do
     render Components::Nested.new
 
