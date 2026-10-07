@@ -9,12 +9,6 @@
 - Rails >= 7.2 and < 9.0
 - Phlex Rails >= 1.2 and < 3.0
 
-## Upgrading to 0.7
-
-- Ruby 3.3 is no longer supported. Upgrade to Ruby 3.4 or later.
-- Proscenium 0.26 or later is required. Outside production, CSS module class names now end with the module's path (see [CSS Modules](#css-modules)), so tests that match exact class names need updating.
-- `Proscenium::Phlex::React` has been removed. Remove any `include Proscenium::Phlex::React` from your components.
-
 ## Usage
 
 [Phlex](https://www.phlex.fun/) is a framework for building fast, reusable, testable views in pure Ruby. [Proscenium](https://proscenium.rocks/) works perfectly with [Phlex](https://www.phlex.fun), with support for side-loading, CSS modules, and more.
