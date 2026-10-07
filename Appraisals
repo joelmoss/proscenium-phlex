@@ -19,3 +19,13 @@ appraise 'phlex2/rails8' do
   gem 'rails', '~> 8.0.1'
   gem 'phlex-rails', '~> 2.3'
 end
+
+appraise 'phlex1/rails81' do
+  gem 'rails', '~> 8.1.0'
+  gem 'phlex-rails', '~> 1.2'
+end
+
+appraise 'phlex2/rails81' do
+  gem 'rails', '~> 8.1.0'
+  gem 'phlex-rails', '~> 2.3'
+end

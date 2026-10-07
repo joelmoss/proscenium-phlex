@@ -20,8 +20,10 @@ jobs:
         gemfile:
           - phlex1_rails7
           - phlex1_rails8
+          - phlex1_rails81
           - phlex2_rails7
           - phlex2_rails8
+          - phlex2_rails81
 
     env:
       RAILS_ENV: test
