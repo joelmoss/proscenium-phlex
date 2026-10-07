@@ -3,7 +3,7 @@
 class Views::Layouts::Application < Views::Base
   include Proscenium::Phlex::Sideload
 
-  def view_template(&block)
+  def view_template(&)
     doctype
 
     html do
@@ -12,7 +12,7 @@ class Views::Layouts::Application < Views::Base
         include_assets
       end
 
-      body(&block)
+      body(&)
     end
   end
 end

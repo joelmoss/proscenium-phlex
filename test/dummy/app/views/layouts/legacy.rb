@@ -4,7 +4,7 @@ class Views::Layouts::Legacy < Views::Base
   include Phlex::Rails::Layout
   include Proscenium::Phlex::Sideload
 
-  def view_template(&block)
+  def view_template(&)
     doctype
 
     html do
@@ -13,7 +13,7 @@ class Views::Layouts::Legacy < Views::Base
         include_assets
       end
 
-      body(&block)
+      body(&)
     end
   end
 end
