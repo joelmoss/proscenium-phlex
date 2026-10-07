@@ -15,12 +15,12 @@ permissions:
   contents: read
 
 jobs:
-  publish:
+  # Installs the bundle and runs the tests, so it gets no OIDC token: a compromised gem or action
+  # here cannot mint a RubyGems key.
+  build:
     runs-on: ubuntu-latest
-    environment: release
-    permissions:
-      contents: read
-      id-token: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -41,13 +41,33 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
       - run: bundle exec rails test
       - run: gem build proscenium-phlex.gemspec
-      # Pinned to a commit, not a tag: this is the only step that can publish, and a tag can be
-      # repointed by whoever owns the action.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: gem
+          path: proscenium-phlex-${{ steps.version.outputs.version }}.gem
+          if-no-files-found: error
+
+  # The only job that can publish. It runs no project code, and its third-party actions are pinned
+  # to commits because a tag can be repointed by whoever owns the action.
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: gem
+      - uses: ruby/setup-ruby@14594264cd68ce8a2345dd349bc3d138a4ef85c8 # v1.327.0
+        with:
+          ruby-version: "3.4"
       - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
       # Skips a version RubyGems already has, so a re-run after a failure finishes the release.
       - name: Push to RubyGems
         env:
-          VERSION: ${{ steps.version.outputs.version }}
+          VERSION: ${{ needs.build.outputs.version }}
         run: |
           if curl -sfo /dev/null "https://rubygems.org/api/v2/rubygems/proscenium-phlex/versions/$VERSION.json"; then
             echo "proscenium-phlex $VERSION is already on RubyGems"
