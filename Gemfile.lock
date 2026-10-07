@@ -150,10 +150,12 @@ GEM
       net-smtp
     marcel (1.2.1)
     matrix (0.4.3)
-    maxitest (6.2.0)
-      minitest (>= 5.20.0, < 5.28.0)
+    maxitest (7.1.1)
+      minitest (>= 6.0.0, < 6.1.0)
     mini_mime (1.1.5)
-    minitest (5.27.0)
+    minitest (6.0.6)
+      drb (~> 2.0)
+      prism (~> 1.5)
     minitest-difftastic (0.2.1)
       difftastic (~> 0.6)
     minitest-focus (1.4.1)
@@ -338,7 +340,7 @@ DEPENDENCIES
   capybara
   debug
   maxitest
-  minitest (~> 5.0)
+  minitest
   minitest-difftastic
   minitest-focus
   minitest-spec-rails

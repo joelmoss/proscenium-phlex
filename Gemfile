@@ -20,7 +20,7 @@ gem 'rubocop-rake', require: false
 
 gem 'capybara'
 gem 'maxitest'
-gem 'minitest', '~> 5.0'
+gem 'minitest'
 gem 'minitest-difftastic'
 gem 'minitest-focus'
 gem 'minitest-spec-rails'

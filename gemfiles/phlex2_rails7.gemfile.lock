@@ -385,7 +385,7 @@ DEPENDENCIES
   capybara
   debug
   maxitest
-  minitest (~> 5.0)
+  minitest
   minitest-difftastic
   minitest-focus
   minitest-spec-rails
