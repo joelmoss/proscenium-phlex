@@ -4,9 +4,11 @@ on: [push]
 permissions:
   contents: read
 
+# Other branches cancel superseded runs. Every master commit gets a full run, so each has its own
+# group: a shared group would still cancel a waiting run when a newer one is queued.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/master' && github.sha || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
 
 jobs:
   test:
